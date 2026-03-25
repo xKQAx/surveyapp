@@ -48,7 +48,7 @@ function App() {
                                 </li>
                             </ul>
                             <span className="navbar-text">
-                                {import.meta.env.VITE_APP_VERSION || 'v1.0.0'}
+                                {import.meta.env.VITE_APP_VERSION || 'v2.0.0'}
                             </span>
                         </div>
                     </div>
