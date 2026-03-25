@@ -19,7 +19,7 @@ function SurveyList({ surveys, loading }) {
             <div className="text-center mt-5">
                 <i className="bi bi-inbox" style={{ fontSize: '4rem', color: '#cbd5e0' }}></i>
                 <h3 className="mt-3 text-muted">No hay encuestas disponibles</h3>
-                <p>Vuelve más tarde para participar en nuevas encuestas.</p>
+                <p>Vuelve luego para participar en nuevas encuestas.</p>
             </div>
         );
     }
