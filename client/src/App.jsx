@@ -5,7 +5,7 @@ import SurveyList from './components/SurveyList';
 import SurveyForm from './components/SurveyForm';
 import Stats from './components/Stats';
 import axios from 'axios';
-
+import VITE_APP_VERSION from '../.env';
 const API_URL = import.meta.env.VITE_API_URL || '';
 
 function App() {
@@ -52,7 +52,7 @@ function App() {
                             </li>
                         </ul>
                         <span className="navbar-text">
-                            <i className="bi bi-rocket-takeoff"></i> Versión {VITE_APP_VERSION}
+                            <i className="bi bi-rocket-takeoff"></i> {import.meta.env.VITE_APP_VERSION || 'v2.3.0'}
                         </span>
                     </div>
                 </div>
