@@ -5,7 +5,7 @@ import SurveyList from './components/SurveyList';
 import SurveyForm from './components/SurveyForm';
 import Stats from './components/Stats';
 import axios from 'axios';
-import VITE_APP_VERSION from '../.env';
+
 const API_URL = import.meta.env.VITE_API_URL || '';
 
 function App() {
