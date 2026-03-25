@@ -25,3 +25,23 @@ app.post('/api/surveys/:id/responses', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+app.post('/api/surveys', (req, res) => {
+    const { title, description, questions } = req.body;
+    
+    const newSurvey = {
+        id: surveys.length + 1,
+        title,
+        description,
+        icon: req.body.icon || '📝',
+        questions: questions || [
+            { id: 1, text: '¿Cómo calificas este servicio?', type: 'rating' }
+        ]
+    };
+    
+    surveys.push(newSurvey);
+    res.status(201).json({ 
+        message: 'Encuesta creada exitosamente',
+        survey: newSurvey 
+    });
+});
