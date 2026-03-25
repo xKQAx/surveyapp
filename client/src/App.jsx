@@ -1,15 +1,17 @@
+// client/src/App.jsx
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import SurveyList from './components/SurveyList';
 import SurveyForm from './components/SurveyForm';
 import Stats from './components/Stats';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 function App() {
     const [surveys, setSurveys] = useState([]);
     const [loading, setLoading] = useState(true);
+    const location = useLocation();
 
     useEffect(() => {
         fetchSurveys();
@@ -27,33 +29,36 @@ function App() {
     };
 
     return (
-        <Router>
-            <div className="container mt-4">
-                <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
-                    <div className="container-fluid">
-                        <Link className="navbar-brand" to="/">
-                            📊 SurveyApp
-                        </Link>
-                        <div className="collapse navbar-collapse">
-                            <ul className="navbar-nav me-auto">
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/">
-                                        Encuestas
-                                    </Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/stats">
-                                        Estadísticas
-                                    </Link>
-                                </li>
-                            </ul>
-                            <span className="navbar-text">
-                                {import.meta.env.VITE_APP_VERSION || 'v2.1.0'}
-                            </span>
-                        </div>
+        <div>
+            <nav className="navbar navbar-expand-lg sticky-top">
+                <div className="container">
+                    <Link className="navbar-brand" to="/">
+                        <i className="bi bi-bar-chart-steps"></i> SurveyApp
+                    </Link>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    <div className="collapse navbar-collapse" id="navbarNav">
+                        <ul className="navbar-nav me-auto">
+                            <li className="nav-item">
+                                <Link className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} to="/">
+                                    <i className="bi bi-house-door"></i> Inicio
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className={`nav-link ${location.pathname === '/stats' ? 'active' : ''}`} to="/stats">
+                                    <i className="bi bi-graph-up"></i> Estadísticas
+                                </Link>
+                            </li>
+                        </ul>
+                        <span className="navbar-text">
+                            <i className="bi bi-rocket-takeoff"></i> {import.meta.env.VITE_APP_VERSION || 'v1.0.0'}
+                        </span>
                     </div>
-                </nav>
+                </div>
+            </nav>
 
+            <div className="container">
                 <Routes>
                     <Route 
                         path="/" 
@@ -69,8 +74,17 @@ function App() {
                     />
                 </Routes>
             </div>
+        </div>
+    );
+}
+
+// Wrapper para usar useLocation
+function AppWrapper() {
+    return (
+        <Router>
+            <App />
         </Router>
     );
 }
 
-export default App;
+export default AppWrapper;
