@@ -5,16 +5,20 @@
   "main": "index.js",
   "scripts": {
     "dev": "node server/index.js",
+    "dev:client": "cd client && npm run dev",
     "build": "cd client && npm run build",
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "preview:client": "cd client && npm run preview"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@supabase/supabase-js": "^2.100.0",
     "@vercel/postgres": "^0.10.0",
     "cors": "^2.8.6",
+    "dotenv": "^16.4.7",
     "express": "^5.2.1"
   }
 }

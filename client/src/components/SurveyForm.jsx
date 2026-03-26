@@ -136,52 +136,104 @@ function SurveyForm({ apiUrl }) {
                             <div className="mt-3">
                                 <select
                                     className="form-select"
-                                    value={answers[currentQ.id] || ''}
+                                    value={answers[currentQ.id] ?? ''}
                                     onChange={(e) => handleAnswerChange(currentQ.id, e.target.value)}
                                     required
                                 >
                                     <option value="">Selecciona una opción</option>
-                                    <option value="5">⭐ 5 - Excelente</option>
-                                    <option value="4">⭐ 4 - Muy bueno</option>
-                                    <option value="3">⭐ 3 - Bueno</option>
-                                    <option value="2">⭐ 2 - Regular</option>
-                                    <option value="1">⭐ 1 - Malo</option>
+                                    {(currentQ.options && currentQ.options.length > 0
+                                        ? currentQ.options
+                                        : [
+                                              { id: '5', text: '⭐ 5 - Excelente' },
+                                              { id: '4', text: '⭐ 4 - Muy bueno' },
+                                              { id: '3', text: '⭐ 3 - Bueno' },
+                                              { id: '2', text: '⭐ 2 - Regular' },
+                                              { id: '1', text: '⭐ 1 - Malo' }
+                                          ]
+                                    ).map((opt) => (
+                                        <option
+                                            key={opt.id}
+                                            value={opt.id}
+                                        >
+                                            {opt.text}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                         )}
 
                         {currentQ.type === 'boolean' && (
                             <div className="mt-3">
-                                <div className="d-flex gap-3">
-                                    <div className="form-check">
-                                        <input
-                                            type="radio"
-                                            className="form-check-input"
-                                            id="yes"
-                                            name={`question-${currentQ.id}`}
-                                            value="si"
-                                            checked={answers[currentQ.id] === 'si'}
-                                            onChange={(e) => handleAnswerChange(currentQ.id, e.target.value)}
-                                            required
-                                        />
-                                        <label className="form-check-label" htmlFor="yes">
-                                            ✅ Sí
-                                        </label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input
-                                            type="radio"
-                                            className="form-check-input"
-                                            id="no"
-                                            name={`question-${currentQ.id}`}
-                                            value="no"
-                                            checked={answers[currentQ.id] === 'no'}
-                                            onChange={(e) => handleAnswerChange(currentQ.id, e.target.value)}
-                                        />
-                                        <label className="form-check-label" htmlFor="no">
-                                            ❌ No
-                                        </label>
-                                    </div>
+                                <div className="d-flex flex-wrap gap-3">
+                                    {(currentQ.options && currentQ.options.length >= 2
+                                        ? currentQ.options.slice(0, 2)
+                                        : [
+                                              { id: 'si', text: '✅ Sí' },
+                                              { id: 'no', text: '❌ No' }
+                                          ]
+                                    ).map((opt, idx) => (
+                                        <div key={String(opt.id)} className="form-check">
+                                            <input
+                                                type="radio"
+                                                className="form-check-input"
+                                                id={`bool-${currentQ.id}-${opt.id}`}
+                                                name={`question-${currentQ.id}`}
+                                                value={opt.id}
+                                                checked={
+                                                    String(answers[currentQ.id]) ===
+                                                    String(opt.id)
+                                                }
+                                                onChange={(e) =>
+                                                    handleAnswerChange(
+                                                        currentQ.id,
+                                                        e.target.value
+                                                    )
+                                                }
+                                                required={idx === 0}
+                                            />
+                                            <label
+                                                className="form-check-label"
+                                                htmlFor={`bool-${currentQ.id}-${opt.id}`}
+                                            >
+                                                {opt.text}
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {currentQ.type === 'choice' && currentQ.options?.length > 0 && (
+                            <div className="mt-3">
+                                <div className="d-flex flex-column gap-2">
+                                    {currentQ.options.map((opt, idx) => (
+                                        <div key={opt.id} className="form-check">
+                                            <input
+                                                type="radio"
+                                                className="form-check-input"
+                                                id={`choice-${currentQ.id}-${opt.id}`}
+                                                name={`question-${currentQ.id}`}
+                                                value={opt.id}
+                                                checked={
+                                                    String(answers[currentQ.id]) ===
+                                                    String(opt.id)
+                                                }
+                                                onChange={(e) =>
+                                                    handleAnswerChange(
+                                                        currentQ.id,
+                                                        e.target.value
+                                                    )
+                                                }
+                                                required={idx === 0}
+                                            />
+                                            <label
+                                                className="form-check-label"
+                                                htmlFor={`choice-${currentQ.id}-${opt.id}`}
+                                            >
+                                                {opt.text}
+                                            </label>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         )}
