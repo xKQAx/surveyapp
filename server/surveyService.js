@@ -131,7 +131,7 @@ async function submitResponses(surveyId, answers, respondentName) {
             timestamp: Date.now()
         };
         memoryResponses.push(newResponse);
-        return newResponse;
+        return { ...newResponse, storage: 'memory' };
     }
 
     const supabase = getSupabase();
@@ -190,7 +190,8 @@ async function submitResponses(surveyId, answers, respondentName) {
         surveyTitle: survey.title,
         answers,
         respondentName: respondentName || 'Anónimo',
-        date: new Date().toISOString()
+        date: new Date().toISOString(),
+        storage: 'supabase'
     };
 }
 

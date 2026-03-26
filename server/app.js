@@ -49,7 +49,8 @@ app.post('/api/surveys/:id/responses', async (req, res) => {
         res.status(201).json({
             success: true,
             message: '¡Gracias por tu participación!',
-            response
+            response,
+            storage: response.storage || 'memory'
         });
     } catch (e) {
         const code = e.statusCode || 500;
@@ -213,13 +214,19 @@ app.get('/api/health', async (req, res) => {
 
     const database = {
         configured: supabaseMod.isSupabaseConfigured(),
-        connected: false
+        connected: false,
+        keySource: supabaseMod.getKeySource ? supabaseMod.getKeySource() : null,
+        runtime: process.env.VERCEL === '1' ? 'vercel' : 'local'
     };
 
     if (!database.configured) {
         database.mode = 'memory';
         database.note =
-            'Sin SUPABASE_URL + clave: la API usa datos en memoria (seed).';
+            'Sin SUPABASE_URL + clave reconocida: la API usa datos en memoria (seed).';
+        if (process.env.VERCEL === '1') {
+            database.vercelFix =
+                'Define SUPABASE_URL y SUPABASE_ANON_KEY o SUPABASE_SECRET_KEY (o SUPABASE_SERVICE_ROLE_KEY) y haz redeploy.';
+        }
     } else {
         try {
             const client = supabaseMod.getSupabase();

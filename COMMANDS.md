@@ -43,9 +43,12 @@ Desde **Cursor** no hace falta un plugin obligatorio: abre el proyecto en el nav
 
 ## Vercel + Supabase
 
-1. **Project Settings → Environment Variables**: mismas claves que en `.env` (al menos `SUPABASE_URL` y una clave).
-2. Redeploy después de cambiar variables.
-3. El frontend desplegado llama a `/api` en el **mismo dominio**; no necesitas `VITE_API_URL` salvo que el API esté en otro origen.
+1. **Settings → Environment Variables**: añade `SUPABASE_URL` y `SUPABASE_ANON_KEY` o `SUPABASE_SERVICE_ROLE_KEY` (recomendada en servidor si RLS bloquea; nunca en variables `VITE_*`). Activa **Production** (y **Preview** si aplica) y **redeploy**.
+2. Los logs de Postgres (`supabase_admin`, `postgres_exporter`, etc.) **no** prueban que tu app inserte datos; solo actividad interna. Comprueba la tabla `responses` en Table Editor y la respuesta JSON del POST: debe llevar `"storage": "supabase"`. Si ves `"storage": "memory"`, las variables no están disponibles en la función serverless (`process.env`).
+3. Abre `GET https://tu-dominio/api/health`: `database.configured` y `database.connected` deben ser `true`.
+4. Si el INSERT falla por RLS, ejecuta `supabase/fix_rls_anon.sql` en el SQL Editor.
+5. **404 al recargar** `/stats`: el `vercel.json` reescribe rutas del SPA a `index.html`. Tras cambiarlo, vuelve a desplegar.
+6. El frontend llama a `/api` en el **mismo dominio**; `VITE_API_URL` puede ir vacío.
 
 ---
 
