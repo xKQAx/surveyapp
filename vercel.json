@@ -1,6 +1,5 @@
 {
     "version": 2,
-<<<<<<< HEAD
     "installCommand": "npm install",
     "buildCommand": "cd client && npm install && npm run build",
     "outputDirectory": "client/dist",
@@ -20,16 +19,4 @@
             "maxDuration": 30
         }
     }
-=======
-    "buildCommand": "cd client && npm install && npm run build",
-    "outputDirectory": "client/dist",
-    "installCommand": "npm install",
-    "framework": "vite",
-    "rewrites": [
-        {
-            "source": "/api/(.*)",
-            "destination": "/api/index.js"
-        }
-    ]
->>>>>>> teammate/main
 }
