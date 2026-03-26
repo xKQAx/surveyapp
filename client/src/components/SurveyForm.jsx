@@ -136,11 +136,16 @@ function SurveyForm({ apiUrl }) {
                             <div className="mt-3">
                                 <select
                                     className="form-select"
+<<<<<<< HEAD
                                     value={answers[currentQ.id] ?? ''}
+=======
+                                    value={answers[currentQ.id] || ''}
+>>>>>>> teammate/main
                                     onChange={(e) => handleAnswerChange(currentQ.id, e.target.value)}
                                     required
                                 >
                                     <option value="">Selecciona una opción</option>
+<<<<<<< HEAD
                                     {(currentQ.options && currentQ.options.length > 0
                                         ? currentQ.options
                                         : [
@@ -158,12 +163,20 @@ function SurveyForm({ apiUrl }) {
                                             {opt.text}
                                         </option>
                                     ))}
+=======
+                                    <option value="5">⭐ 5 - Excelente</option>
+                                    <option value="4">⭐ 4 - Muy bueno</option>
+                                    <option value="3">⭐ 3 - Bueno</option>
+                                    <option value="2">⭐ 2 - Regular</option>
+                                    <option value="1">⭐ 1 - Malo</option>
+>>>>>>> teammate/main
                                 </select>
                             </div>
                         )}
 
                         {currentQ.type === 'boolean' && (
                             <div className="mt-3">
+<<<<<<< HEAD
                                 <div className="d-flex flex-wrap gap-3">
                                     {(currentQ.options && currentQ.options.length >= 2
                                         ? currentQ.options.slice(0, 2)
@@ -234,6 +247,38 @@ function SurveyForm({ apiUrl }) {
                                             </label>
                                         </div>
                                     ))}
+=======
+                                <div className="d-flex gap-3">
+                                    <div className="form-check">
+                                        <input
+                                            type="radio"
+                                            className="form-check-input"
+                                            id="yes"
+                                            name={`question-${currentQ.id}`}
+                                            value="si"
+                                            checked={answers[currentQ.id] === 'si'}
+                                            onChange={(e) => handleAnswerChange(currentQ.id, e.target.value)}
+                                            required
+                                        />
+                                        <label className="form-check-label" htmlFor="yes">
+                                            ✅ Sí
+                                        </label>
+                                    </div>
+                                    <div className="form-check">
+                                        <input
+                                            type="radio"
+                                            className="form-check-input"
+                                            id="no"
+                                            name={`question-${currentQ.id}`}
+                                            value="no"
+                                            checked={answers[currentQ.id] === 'no'}
+                                            onChange={(e) => handleAnswerChange(currentQ.id, e.target.value)}
+                                        />
+                                        <label className="form-check-label" htmlFor="no">
+                                            ❌ No
+                                        </label>
+                                    </div>
+>>>>>>> teammate/main
                                 </div>
                             </div>
                         )}

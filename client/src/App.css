@@ -182,8 +182,11 @@
     border-right-color: var(--border);
   }
 }
+<<<<<<< HEAD
 
 .stats-page .stats-survey-card {
   border-radius: 12px;
   border: 1px solid rgba(0, 0, 0, 0.06);
 }
+=======
+>>>>>>> teammate/main
