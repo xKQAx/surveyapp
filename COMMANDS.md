@@ -43,6 +43,10 @@ Desde **Cursor** no hace falta un plugin obligatorio: abre el proyecto en el nav
 
 ## Vercel + Supabase
 
+**Importante — carpeta del proyecto:** si el repositorio en GitHub tiene la app dentro de una subcarpeta (por ejemplo `surveyapp/`), en Vercel ve a **Settings → General → Root Directory** y pon **`surveyapp`** (o el nombre de esa carpeta). Si el root queda en el padre, Vercel puede desplegar **otro** `api/` antiguo o no encontrar el tuyo, y `/api/health` seguirá con el JSON corto sin `database` ni `format: "v2"`.
+
+Tras cada cambio en el código: **push a Git** y espera el deploy (o **Redeploy**). En `/api/health` la respuesta nueva incluye **`format": "v2"`** y **`database`**. Si no los ves, el deploy no está usando este código.
+
 1. **Settings → Environment Variables**: añade `SUPABASE_URL` y `SUPABASE_ANON_KEY` o `SUPABASE_SERVICE_ROLE_KEY` (recomendada en servidor si RLS bloquea; nunca en variables `VITE_*`). Activa **Production** (y **Preview** si aplica) y **redeploy**.
 2. Los logs de Postgres (`supabase_admin`, `postgres_exporter`, etc.) **no** prueban que tu app inserte datos; solo actividad interna. Comprueba la tabla `responses` en Table Editor y la respuesta JSON del POST: debe llevar `"storage": "supabase"`. Si ves `"storage": "memory"`, las variables no están disponibles en la función serverless (`process.env`).
 3. Abre `GET https://tu-dominio/api/health`: `database.configured` y `database.connected` deben ser `true`.

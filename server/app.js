@@ -250,6 +250,7 @@ app.get('/api/health', async (req, res) => {
     }
 
     res.json({
+        format: 'v2',
         status: 'OK',
         timestamp: new Date().toISOString(),
         uptime: process.uptime(),
@@ -257,7 +258,13 @@ app.get('/api/health', async (req, res) => {
         responsesCount,
         canonicalSurveyCount: surveyService.seedData.surveys.length,
         listingMode: 'canonical',
-        database
+        database,
+        deploy: {
+            vercelEnv: process.env.VERCEL_ENV || null,
+            gitCommit: process.env.VERCEL_GIT_COMMIT_SHA
+                ? process.env.VERCEL_GIT_COMMIT_SHA.slice(0, 7)
+                : null
+        }
     });
 });
 
